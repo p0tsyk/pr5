@@ -1,0 +1,1586 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище MebelCenterModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="middle_name" Type="nvarchar" MaxLength="60" />
+          <Property Name="phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="120" />
+          <Property Name="address" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="registration_date" Type="date" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="delivery">
+          <Key>
+            <PropertyRef Name="delivery_id" />
+          </Key>
+          <Property Name="delivery_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="status_id" Type="int" Nullable="false" />
+          <Property Name="delivery_date" Type="date" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="assembler_id" Type="int" />
+        </EntityType>
+        <EntityType Name="delivery_status">
+          <Key>
+            <PropertyRef Name="status_id" />
+          </Key>
+          <Property Name="status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="status_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="employee_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="middle_name" Type="nvarchar" MaxLength="60" />
+          <Property Name="position_id" Type="int" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="hire_date" Type="date" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="estimate">
+          <Key>
+            <PropertyRef Name="estimate_id" />
+          </Key>
+          <Property Name="estimate_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="created_at" Type="date" Nullable="false" />
+          <Property Name="updated_at" Type="date" />
+        </EntityType>
+        <EntityType Name="estimate_item">
+          <Key>
+            <PropertyRef Name="estimate_id" />
+            <PropertyRef Name="item_no" />
+          </Key>
+          <Property Name="estimate_id" Type="int" Nullable="false" />
+          <Property Name="item_no" Type="int" Nullable="false" />
+          <Property Name="pos_type_id" Type="int" Nullable="false" />
+          <Property Name="quantity" Type="numeric" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="price" Type="numeric" Precision="12" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="material">
+          <Key>
+            <PropertyRef Name="material_id" />
+          </Key>
+          <Property Name="material_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="material_name" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="unit_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="measurement">
+          <Key>
+            <PropertyRef Name="measurement_id" />
+          </Key>
+          <Property Name="measurement_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="measurement_date" Type="date" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="measurement_param">
+          <Key>
+            <PropertyRef Name="measurement_id" />
+            <PropertyRef Name="param_type_id" />
+          </Key>
+          <Property Name="measurement_id" Type="int" Nullable="false" />
+          <Property Name="param_type_id" Type="int" Nullable="false" />
+          <Property Name="param_value" Type="numeric" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="movement_type">
+          <Key>
+            <PropertyRef Name="movement_type_id" />
+          </Key>
+          <Property Name="movement_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="notification">
+          <Key>
+            <PropertyRef Name="notification_id" />
+          </Key>
+          <Property Name="notification_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ntf_type_id" Type="int" Nullable="false" />
+          <Property Name="order_id" Type="int" />
+          <Property Name="recipient_email" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="sent_at" Type="datetime" Nullable="false" />
+          <Property Name="send_status" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="notification_type">
+          <Key>
+            <PropertyRef Name="ntf_type_id" />
+          </Key>
+          <Property Name="ntf_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type_name" Type="nvarchar" MaxLength="120" Nullable="false" />
+        </EntityType>
+        <EntityType Name="order_status">
+          <Key>
+            <PropertyRef Name="status_id" />
+          </Key>
+          <Property Name="status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="status_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="client_id" Type="int" Nullable="false" />
+          <Property Name="designer_id" Type="int" Nullable="false" />
+          <Property Name="order_date" Type="date" Nullable="false" />
+          <Property Name="status_id" Type="int" Nullable="false" />
+          <Property Name="final_cost" Type="numeric" Precision="12" Scale="2" />
+          <Property Name="completed_at" Type="date" />
+          <Property Name="cancel_reason" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="param_type">
+          <Key>
+            <PropertyRef Name="param_type_id" />
+          </Key>
+          <Property Name="param_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="param_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="unit_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="payment">
+          <Key>
+            <PropertyRef Name="payment_id" />
+          </Key>
+          <Property Name="payment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="payment_type_id" Type="int" Nullable="false" />
+          <Property Name="payment_date" Type="date" Nullable="false" />
+          <Property Name="amount" Type="numeric" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="payment_method" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="payment_type">
+          <Key>
+            <PropertyRef Name="payment_type_id" />
+          </Key>
+          <Property Name="payment_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pos_type">
+          <Key>
+            <PropertyRef Name="pos_type_id" />
+          </Key>
+          <Property Name="pos_type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pos_name" Type="nvarchar" MaxLength="120" Nullable="false" />
+          <Property Name="unit_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="position">
+          <Key>
+            <PropertyRef Name="position_id" />
+          </Key>
+          <Property Name="position_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="position_name" Type="nvarchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="stock_movement">
+          <Key>
+            <PropertyRef Name="movement_id" />
+          </Key>
+          <Property Name="movement_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="material_id" Type="int" Nullable="false" />
+          <Property Name="movement_type_id" Type="int" Nullable="false" />
+          <Property Name="movement_date" Type="date" Nullable="false" />
+          <Property Name="quantity" Type="numeric" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="unit_price" Type="numeric" Precision="12" Scale="2" />
+          <Property Name="document_no" Type="nvarchar" MaxLength="40" />
+          <Property Name="order_id" Type="int" />
+        </EntityType>
+        <EntityType Name="unit">
+          <Key>
+            <PropertyRef Name="unit_id" />
+          </Key>
+          <Property Name="unit_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="unit_name" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user_account">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="password_hash" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_at" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__delivery__order___308E3499">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="delivery" Type="Self.delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="delivery">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__delivery__status__318258D2">
+          <End Role="delivery_status" Type="Self.delivery_status" Multiplicity="1" />
+          <End Role="delivery" Type="Self.delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="delivery_status">
+              <PropertyRef Name="status_id" />
+            </Principal>
+            <Dependent Role="delivery">
+              <PropertyRef Name="status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__estimate___estim__1C873BEC">
+          <End Role="estimate" Type="Self.estimate" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="estimate_item" Type="Self.estimate_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estimate">
+              <PropertyRef Name="estimate_id" />
+            </Principal>
+            <Dependent Role="estimate_item">
+              <PropertyRef Name="estimate_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__estimate___pos_t__1D7B6025">
+          <End Role="pos_type" Type="Self.pos_type" Multiplicity="1" />
+          <End Role="estimate_item" Type="Self.estimate_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pos_type">
+              <PropertyRef Name="pos_type_id" />
+            </Principal>
+            <Dependent Role="estimate_item">
+              <PropertyRef Name="pos_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__estimate__order___18B6AB08">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="estimate" Type="Self.estimate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="estimate">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__material__unit_i__719CDDE7">
+          <End Role="unit" Type="Self.unit" Multiplicity="1" />
+          <End Role="material" Type="Self.material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="unit">
+              <PropertyRef Name="unit_id" />
+            </Principal>
+            <Dependent Role="material">
+              <PropertyRef Name="unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__measureme__measu__13F1F5EB">
+          <End Role="measurement" Type="Self.measurement" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="measurement_param" Type="Self.measurement_param" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="measurement">
+              <PropertyRef Name="measurement_id" />
+            </Principal>
+            <Dependent Role="measurement_param">
+              <PropertyRef Name="measurement_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__measureme__order__11158940">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="measurement" Type="Self.measurement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="measurement">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__measureme__param__14E61A24">
+          <End Role="param_type" Type="Self.param_type" Multiplicity="1" />
+          <End Role="measurement_param" Type="Self.measurement_param" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="param_type">
+              <PropertyRef Name="param_type_id" />
+            </Principal>
+            <Dependent Role="measurement_param">
+              <PropertyRef Name="param_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__notificat__ntf_t__3552E9B6">
+          <End Role="notification_type" Type="Self.notification_type" Multiplicity="1" />
+          <End Role="notification" Type="Self.notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notification_type">
+              <PropertyRef Name="ntf_type_id" />
+            </Principal>
+            <Dependent Role="notification">
+              <PropertyRef Name="ntf_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__notificat__order__36470DEF">
+          <End Role="orders" Type="Self.orders" Multiplicity="0..1" />
+          <End Role="notification" Type="Self.notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="notification">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orders__status_i__0D44F85C">
+          <End Role="order_status" Type="Self.order_status" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order_status">
+              <PropertyRef Name="status_id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__param_typ__unit___671F4F74">
+          <End Role="unit" Type="Self.unit" Multiplicity="1" />
+          <End Role="param_type" Type="Self.param_type" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="unit">
+              <PropertyRef Name="unit_id" />
+            </Principal>
+            <Dependent Role="param_type">
+              <PropertyRef Name="unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__payment__order_i__22401542">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="payment" Type="Self.payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="payment">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__payment__payment__2334397B">
+          <End Role="payment_type" Type="Self.payment_type" Multiplicity="1" />
+          <End Role="payment" Type="Self.payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="payment_type">
+              <PropertyRef Name="payment_type_id" />
+            </Principal>
+            <Dependent Role="payment">
+              <PropertyRef Name="payment_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__pos_type__unit_i__6AEFE058">
+          <End Role="unit" Type="Self.unit" Multiplicity="1" />
+          <End Role="pos_type" Type="Self.pos_type" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="unit">
+              <PropertyRef Name="unit_id" />
+            </Principal>
+            <Dependent Role="pos_type">
+              <PropertyRef Name="unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__stock_mov__mater__28ED12D1">
+          <End Role="material" Type="Self.material" Multiplicity="1" />
+          <End Role="stock_movement" Type="Self.stock_movement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="material">
+              <PropertyRef Name="material_id" />
+            </Principal>
+            <Dependent Role="stock_movement">
+              <PropertyRef Name="material_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__stock_mov__movem__29E1370A">
+          <End Role="movement_type" Type="Self.movement_type" Multiplicity="1" />
+          <End Role="stock_movement" Type="Self.stock_movement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="movement_type">
+              <PropertyRef Name="movement_type_id" />
+            </Principal>
+            <Dependent Role="stock_movement">
+              <PropertyRef Name="movement_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__stock_mov__order__2CBDA3B5">
+          <End Role="orders" Type="Self.orders" Multiplicity="0..1" />
+          <End Role="stock_movement" Type="Self.stock_movement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="stock_movement">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_client_user_account">
+          <End Role="user_account" Type="Self.user_account" Multiplicity="1" />
+          <End Role="client" Type="Self.client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_account">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="client">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_delivery_assembler">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+          <End Role="delivery" Type="Self.delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="delivery">
+              <PropertyRef Name="assembler_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employee_position">
+          <End Role="position" Type="Self.position" Multiplicity="1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="position">
+              <PropertyRef Name="position_id" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="position_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employee_user_account">
+          <End Role="user_account" Type="Self.user_account" Multiplicity="1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_account">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_client">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_designer">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="designer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище MebelCenterModelContainer">
+          <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="delivery" EntityType="Self.delivery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="delivery_status" EntityType="Self.delivery_status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="estimate" EntityType="Self.estimate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="estimate_item" EntityType="Self.estimate_item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="material" EntityType="Self.material" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="measurement" EntityType="Self.measurement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="measurement_param" EntityType="Self.measurement_param" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="movement_type" EntityType="Self.movement_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notification" EntityType="Self.notification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notification_type" EntityType="Self.notification_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="order_status" EntityType="Self.order_status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="param_type" EntityType="Self.param_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="payment" EntityType="Self.payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="payment_type" EntityType="Self.payment_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pos_type" EntityType="Self.pos_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="position" EntityType="Self.position" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="stock_movement" EntityType="Self.stock_movement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="unit" EntityType="Self.unit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_account" EntityType="Self.user_account" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__delivery__order___308E3499" Association="Self.FK__delivery__order___308E3499">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="delivery" EntitySet="delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK__delivery__status__318258D2" Association="Self.FK__delivery__status__318258D2">
+            <End Role="delivery_status" EntitySet="delivery_status" />
+            <End Role="delivery" EntitySet="delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK__estimate___estim__1C873BEC" Association="Self.FK__estimate___estim__1C873BEC">
+            <End Role="estimate" EntitySet="estimate" />
+            <End Role="estimate_item" EntitySet="estimate_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__estimate___pos_t__1D7B6025" Association="Self.FK__estimate___pos_t__1D7B6025">
+            <End Role="pos_type" EntitySet="pos_type" />
+            <End Role="estimate_item" EntitySet="estimate_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__estimate__order___18B6AB08" Association="Self.FK__estimate__order___18B6AB08">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="estimate" EntitySet="estimate" />
+          </AssociationSet>
+          <AssociationSet Name="FK__material__unit_i__719CDDE7" Association="Self.FK__material__unit_i__719CDDE7">
+            <End Role="unit" EntitySet="unit" />
+            <End Role="material" EntitySet="material" />
+          </AssociationSet>
+          <AssociationSet Name="FK__measureme__measu__13F1F5EB" Association="Self.FK__measureme__measu__13F1F5EB">
+            <End Role="measurement" EntitySet="measurement" />
+            <End Role="measurement_param" EntitySet="measurement_param" />
+          </AssociationSet>
+          <AssociationSet Name="FK__measureme__order__11158940" Association="Self.FK__measureme__order__11158940">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="measurement" EntitySet="measurement" />
+          </AssociationSet>
+          <AssociationSet Name="FK__measureme__param__14E61A24" Association="Self.FK__measureme__param__14E61A24">
+            <End Role="param_type" EntitySet="param_type" />
+            <End Role="measurement_param" EntitySet="measurement_param" />
+          </AssociationSet>
+          <AssociationSet Name="FK__notificat__ntf_t__3552E9B6" Association="Self.FK__notificat__ntf_t__3552E9B6">
+            <End Role="notification_type" EntitySet="notification_type" />
+            <End Role="notification" EntitySet="notification" />
+          </AssociationSet>
+          <AssociationSet Name="FK__notificat__order__36470DEF" Association="Self.FK__notificat__order__36470DEF">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="notification" EntitySet="notification" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orders__status_i__0D44F85C" Association="Self.FK__orders__status_i__0D44F85C">
+            <End Role="order_status" EntitySet="order_status" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__param_typ__unit___671F4F74" Association="Self.FK__param_typ__unit___671F4F74">
+            <End Role="unit" EntitySet="unit" />
+            <End Role="param_type" EntitySet="param_type" />
+          </AssociationSet>
+          <AssociationSet Name="FK__payment__order_i__22401542" Association="Self.FK__payment__order_i__22401542">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="payment" EntitySet="payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__payment__payment__2334397B" Association="Self.FK__payment__payment__2334397B">
+            <End Role="payment_type" EntitySet="payment_type" />
+            <End Role="payment" EntitySet="payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__pos_type__unit_i__6AEFE058" Association="Self.FK__pos_type__unit_i__6AEFE058">
+            <End Role="unit" EntitySet="unit" />
+            <End Role="pos_type" EntitySet="pos_type" />
+          </AssociationSet>
+          <AssociationSet Name="FK__stock_mov__mater__28ED12D1" Association="Self.FK__stock_mov__mater__28ED12D1">
+            <End Role="material" EntitySet="material" />
+            <End Role="stock_movement" EntitySet="stock_movement" />
+          </AssociationSet>
+          <AssociationSet Name="FK__stock_mov__movem__29E1370A" Association="Self.FK__stock_mov__movem__29E1370A">
+            <End Role="movement_type" EntitySet="movement_type" />
+            <End Role="stock_movement" EntitySet="stock_movement" />
+          </AssociationSet>
+          <AssociationSet Name="FK__stock_mov__order__2CBDA3B5" Association="Self.FK__stock_mov__order__2CBDA3B5">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="stock_movement" EntitySet="stock_movement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_client_user_account" Association="Self.FK_client_user_account">
+            <End Role="user_account" EntitySet="user_account" />
+            <End Role="client" EntitySet="client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_delivery_assembler" Association="Self.FK_delivery_assembler">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="delivery" EntitySet="delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employee_position" Association="Self.FK_employee_position">
+            <End Role="position" EntitySet="position" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employee_user_account" Association="Self.FK_employee_user_account">
+            <End Role="user_account" EntitySet="user_account" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_client" Association="Self.FK_orders_client">
+            <End Role="client" EntitySet="client" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_designer" Association="Self.FK_orders_designer">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MebelCenterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="client_id" />
+          </Key>
+          <Property Name="client_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="last_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="middle_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="registration_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="user_account" Relationship="Self.FK_client_user_account" FromRole="client" ToRole="user_account" />
+          <NavigationProperty Name="orders" Relationship="Self.FK_orders_client" FromRole="client" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="delivery">
+          <Key>
+            <PropertyRef Name="delivery_id" />
+          </Key>
+          <Property Name="delivery_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="status_id" Type="Int32" Nullable="false" />
+          <Property Name="delivery_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="assembler_id" Type="Int32" />
+          <NavigationProperty Name="orders" Relationship="Self.FK__delivery__order___308E3499" FromRole="delivery" ToRole="orders" />
+          <NavigationProperty Name="delivery_status" Relationship="Self.FK__delivery__status__318258D2" FromRole="delivery" ToRole="delivery_status" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_delivery_assembler" FromRole="delivery" ToRole="employee" />
+        </EntityType>
+        <EntityType Name="delivery_status">
+          <Key>
+            <PropertyRef Name="status_id" />
+          </Key>
+          <Property Name="status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="status_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="delivery" Relationship="Self.FK__delivery__status__318258D2" FromRole="delivery_status" ToRole="delivery" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="employee_id" />
+          </Key>
+          <Property Name="employee_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="last_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="middle_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="position_id" Type="Int32" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="hire_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="delivery" Relationship="Self.FK_delivery_assembler" FromRole="employee" ToRole="delivery" />
+          <NavigationProperty Name="position" Relationship="Self.FK_employee_position" FromRole="employee" ToRole="position" />
+          <NavigationProperty Name="user_account" Relationship="Self.FK_employee_user_account" FromRole="employee" ToRole="user_account" />
+          <NavigationProperty Name="orders" Relationship="Self.FK_orders_designer" FromRole="employee" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="estimate">
+          <Key>
+            <PropertyRef Name="estimate_id" />
+          </Key>
+          <Property Name="estimate_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="updated_at" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="estimate_item" Relationship="Self.FK__estimate___estim__1C873BEC" FromRole="estimate" ToRole="estimate_item" />
+          <NavigationProperty Name="orders" Relationship="Self.FK__estimate__order___18B6AB08" FromRole="estimate" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="estimate_item">
+          <Key>
+            <PropertyRef Name="estimate_id" />
+            <PropertyRef Name="item_no" />
+          </Key>
+          <Property Name="estimate_id" Type="Int32" Nullable="false" />
+          <Property Name="item_no" Type="Int32" Nullable="false" />
+          <Property Name="pos_type_id" Type="Int32" Nullable="false" />
+          <Property Name="quantity" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <NavigationProperty Name="estimate" Relationship="Self.FK__estimate___estim__1C873BEC" FromRole="estimate_item" ToRole="estimate" />
+          <NavigationProperty Name="pos_type" Relationship="Self.FK__estimate___pos_t__1D7B6025" FromRole="estimate_item" ToRole="pos_type" />
+        </EntityType>
+        <EntityType Name="material">
+          <Key>
+            <PropertyRef Name="material_id" />
+          </Key>
+          <Property Name="material_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="material_name" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="unit_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="unit" Relationship="Self.FK__material__unit_i__719CDDE7" FromRole="material" ToRole="unit" />
+          <NavigationProperty Name="stock_movement" Relationship="Self.FK__stock_mov__mater__28ED12D1" FromRole="material" ToRole="stock_movement" />
+        </EntityType>
+        <EntityType Name="measurement">
+          <Key>
+            <PropertyRef Name="measurement_id" />
+          </Key>
+          <Property Name="measurement_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="measurement_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="measurement_param" Relationship="Self.FK__measureme__measu__13F1F5EB" FromRole="measurement" ToRole="measurement_param" />
+          <NavigationProperty Name="orders" Relationship="Self.FK__measureme__order__11158940" FromRole="measurement" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="measurement_param">
+          <Key>
+            <PropertyRef Name="measurement_id" />
+            <PropertyRef Name="param_type_id" />
+          </Key>
+          <Property Name="measurement_id" Type="Int32" Nullable="false" />
+          <Property Name="param_type_id" Type="Int32" Nullable="false" />
+          <Property Name="param_value" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="measurement" Relationship="Self.FK__measureme__measu__13F1F5EB" FromRole="measurement_param" ToRole="measurement" />
+          <NavigationProperty Name="param_type" Relationship="Self.FK__measureme__param__14E61A24" FromRole="measurement_param" ToRole="param_type" />
+        </EntityType>
+        <EntityType Name="movement_type">
+          <Key>
+            <PropertyRef Name="movement_type_id" />
+          </Key>
+          <Property Name="movement_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="stock_movement" Relationship="Self.FK__stock_mov__movem__29E1370A" FromRole="movement_type" ToRole="stock_movement" />
+        </EntityType>
+        <EntityType Name="notification">
+          <Key>
+            <PropertyRef Name="notification_id" />
+          </Key>
+          <Property Name="notification_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ntf_type_id" Type="Int32" Nullable="false" />
+          <Property Name="order_id" Type="Int32" />
+          <Property Name="recipient_email" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sent_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="send_status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="notification_type" Relationship="Self.FK__notificat__ntf_t__3552E9B6" FromRole="notification" ToRole="notification_type" />
+          <NavigationProperty Name="orders" Relationship="Self.FK__notificat__order__36470DEF" FromRole="notification" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="notification_type">
+          <Key>
+            <PropertyRef Name="ntf_type_id" />
+          </Key>
+          <Property Name="ntf_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_name" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="notification" Relationship="Self.FK__notificat__ntf_t__3552E9B6" FromRole="notification_type" ToRole="notification" />
+        </EntityType>
+        <EntityType Name="order_status">
+          <Key>
+            <PropertyRef Name="status_id" />
+          </Key>
+          <Property Name="status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="status_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="orders" Relationship="Self.FK__orders__status_i__0D44F85C" FromRole="order_status" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <Property Name="designer_id" Type="Int32" Nullable="false" />
+          <Property Name="order_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="status_id" Type="Int32" Nullable="false" />
+          <Property Name="final_cost" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="completed_at" Type="DateTime" Precision="0" />
+          <Property Name="cancel_reason" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="client" Relationship="Self.FK_orders_client" FromRole="orders" ToRole="client" />
+          <NavigationProperty Name="delivery" Relationship="Self.FK__delivery__order___308E3499" FromRole="orders" ToRole="delivery" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_orders_designer" FromRole="orders" ToRole="employee" />
+          <NavigationProperty Name="estimate" Relationship="Self.FK__estimate__order___18B6AB08" FromRole="orders" ToRole="estimate" />
+          <NavigationProperty Name="measurement" Relationship="Self.FK__measureme__order__11158940" FromRole="orders" ToRole="measurement" />
+          <NavigationProperty Name="notification" Relationship="Self.FK__notificat__order__36470DEF" FromRole="orders" ToRole="notification" />
+          <NavigationProperty Name="order_status" Relationship="Self.FK__orders__status_i__0D44F85C" FromRole="orders" ToRole="order_status" />
+          <NavigationProperty Name="payment" Relationship="Self.FK__payment__order_i__22401542" FromRole="orders" ToRole="payment" />
+          <NavigationProperty Name="stock_movement" Relationship="Self.FK__stock_mov__order__2CBDA3B5" FromRole="orders" ToRole="stock_movement" />
+        </EntityType>
+        <EntityType Name="param_type">
+          <Key>
+            <PropertyRef Name="param_type_id" />
+          </Key>
+          <Property Name="param_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="param_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="unit_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="measurement_param" Relationship="Self.FK__measureme__param__14E61A24" FromRole="param_type" ToRole="measurement_param" />
+          <NavigationProperty Name="unit" Relationship="Self.FK__param_typ__unit___671F4F74" FromRole="param_type" ToRole="unit" />
+        </EntityType>
+        <EntityType Name="payment">
+          <Key>
+            <PropertyRef Name="payment_id" />
+          </Key>
+          <Property Name="payment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_id" Type="Int32" Nullable="false" />
+          <Property Name="payment_type_id" Type="Int32" Nullable="false" />
+          <Property Name="payment_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="amount" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="payment_method" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="orders" Relationship="Self.FK__payment__order_i__22401542" FromRole="payment" ToRole="orders" />
+          <NavigationProperty Name="payment_type" Relationship="Self.FK__payment__payment__2334397B" FromRole="payment" ToRole="payment_type" />
+        </EntityType>
+        <EntityType Name="payment_type">
+          <Key>
+            <PropertyRef Name="payment_type_id" />
+          </Key>
+          <Property Name="payment_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="payment" Relationship="Self.FK__payment__payment__2334397B" FromRole="payment_type" ToRole="payment" />
+        </EntityType>
+        <EntityType Name="pos_type">
+          <Key>
+            <PropertyRef Name="pos_type_id" />
+          </Key>
+          <Property Name="pos_type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pos_name" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="unit_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="estimate_item" Relationship="Self.FK__estimate___pos_t__1D7B6025" FromRole="pos_type" ToRole="estimate_item" />
+          <NavigationProperty Name="unit" Relationship="Self.FK__pos_type__unit_i__6AEFE058" FromRole="pos_type" ToRole="unit" />
+        </EntityType>
+        <EntityType Name="position">
+          <Key>
+            <PropertyRef Name="position_id" />
+          </Key>
+          <Property Name="position_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="position_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_employee_position" FromRole="position" ToRole="employee" />
+        </EntityType>
+        <EntityType Name="stock_movement">
+          <Key>
+            <PropertyRef Name="movement_id" />
+          </Key>
+          <Property Name="movement_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="material_id" Type="Int32" Nullable="false" />
+          <Property Name="movement_type_id" Type="Int32" Nullable="false" />
+          <Property Name="movement_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="quantity" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="unit_price" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="document_no" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="order_id" Type="Int32" />
+          <NavigationProperty Name="material" Relationship="Self.FK__stock_mov__mater__28ED12D1" FromRole="stock_movement" ToRole="material" />
+          <NavigationProperty Name="movement_type" Relationship="Self.FK__stock_mov__movem__29E1370A" FromRole="stock_movement" ToRole="movement_type" />
+          <NavigationProperty Name="orders" Relationship="Self.FK__stock_mov__order__2CBDA3B5" FromRole="stock_movement" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="unit">
+          <Key>
+            <PropertyRef Name="unit_id" />
+          </Key>
+          <Property Name="unit_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="unit_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="material" Relationship="Self.FK__material__unit_i__719CDDE7" FromRole="unit" ToRole="material" />
+          <NavigationProperty Name="param_type" Relationship="Self.FK__param_typ__unit___671F4F74" FromRole="unit" ToRole="param_type" />
+          <NavigationProperty Name="pos_type" Relationship="Self.FK__pos_type__unit_i__6AEFE058" FromRole="unit" ToRole="pos_type" />
+        </EntityType>
+        <EntityType Name="user_account">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password_hash" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="client" Relationship="Self.FK_client_user_account" FromRole="user_account" ToRole="client" />
+          <NavigationProperty Name="employee" Relationship="Self.FK_employee_user_account" FromRole="user_account" ToRole="employee" />
+        </EntityType>
+        <Association Name="FK_client_user_account">
+          <End Role="user_account" Type="Self.user_account" Multiplicity="1" />
+          <End Role="client" Type="Self.client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_account">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="client">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_client">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="client_id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__delivery__order___308E3499">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="delivery" Type="Self.delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="delivery">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__delivery__status__318258D2">
+          <End Role="delivery_status" Type="Self.delivery_status" Multiplicity="1" />
+          <End Role="delivery" Type="Self.delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="delivery_status">
+              <PropertyRef Name="status_id" />
+            </Principal>
+            <Dependent Role="delivery">
+              <PropertyRef Name="status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_delivery_assembler">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+          <End Role="delivery" Type="Self.delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="delivery">
+              <PropertyRef Name="assembler_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employee_position">
+          <End Role="position" Type="Self.position" Multiplicity="1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="position">
+              <PropertyRef Name="position_id" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="position_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_employee_user_account">
+          <End Role="user_account" Type="Self.user_account" Multiplicity="1" />
+          <End Role="employee" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_account">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="employee">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_designer">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="employee_id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="designer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__estimate___estim__1C873BEC">
+          <End Role="estimate" Type="Self.estimate" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="estimate_item" Type="Self.estimate_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estimate">
+              <PropertyRef Name="estimate_id" />
+            </Principal>
+            <Dependent Role="estimate_item">
+              <PropertyRef Name="estimate_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__estimate__order___18B6AB08">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="estimate" Type="Self.estimate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="estimate">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__estimate___pos_t__1D7B6025">
+          <End Role="pos_type" Type="Self.pos_type" Multiplicity="1" />
+          <End Role="estimate_item" Type="Self.estimate_item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pos_type">
+              <PropertyRef Name="pos_type_id" />
+            </Principal>
+            <Dependent Role="estimate_item">
+              <PropertyRef Name="pos_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__material__unit_i__719CDDE7">
+          <End Role="unit" Type="Self.unit" Multiplicity="1" />
+          <End Role="material" Type="Self.material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="unit">
+              <PropertyRef Name="unit_id" />
+            </Principal>
+            <Dependent Role="material">
+              <PropertyRef Name="unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__stock_mov__mater__28ED12D1">
+          <End Role="material" Type="Self.material" Multiplicity="1" />
+          <End Role="stock_movement" Type="Self.stock_movement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="material">
+              <PropertyRef Name="material_id" />
+            </Principal>
+            <Dependent Role="stock_movement">
+              <PropertyRef Name="material_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__measureme__measu__13F1F5EB">
+          <End Role="measurement" Type="Self.measurement" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="measurement_param" Type="Self.measurement_param" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="measurement">
+              <PropertyRef Name="measurement_id" />
+            </Principal>
+            <Dependent Role="measurement_param">
+              <PropertyRef Name="measurement_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__measureme__order__11158940">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="measurement" Type="Self.measurement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="measurement">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__measureme__param__14E61A24">
+          <End Role="param_type" Type="Self.param_type" Multiplicity="1" />
+          <End Role="measurement_param" Type="Self.measurement_param" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="param_type">
+              <PropertyRef Name="param_type_id" />
+            </Principal>
+            <Dependent Role="measurement_param">
+              <PropertyRef Name="param_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__stock_mov__movem__29E1370A">
+          <End Role="movement_type" Type="Self.movement_type" Multiplicity="1" />
+          <End Role="stock_movement" Type="Self.stock_movement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="movement_type">
+              <PropertyRef Name="movement_type_id" />
+            </Principal>
+            <Dependent Role="stock_movement">
+              <PropertyRef Name="movement_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__notificat__ntf_t__3552E9B6">
+          <End Role="notification_type" Type="Self.notification_type" Multiplicity="1" />
+          <End Role="notification" Type="Self.notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="notification_type">
+              <PropertyRef Name="ntf_type_id" />
+            </Principal>
+            <Dependent Role="notification">
+              <PropertyRef Name="ntf_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__notificat__order__36470DEF">
+          <End Role="orders" Type="Self.orders" Multiplicity="0..1" />
+          <End Role="notification" Type="Self.notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="notification">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__orders__status_i__0D44F85C">
+          <End Role="order_status" Type="Self.order_status" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="order_status">
+              <PropertyRef Name="status_id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__payment__order_i__22401542">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="payment" Type="Self.payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="payment">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__stock_mov__order__2CBDA3B5">
+          <End Role="orders" Type="Self.orders" Multiplicity="0..1" />
+          <End Role="stock_movement" Type="Self.stock_movement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="stock_movement">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__param_typ__unit___671F4F74">
+          <End Role="unit" Type="Self.unit" Multiplicity="1" />
+          <End Role="param_type" Type="Self.param_type" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="unit">
+              <PropertyRef Name="unit_id" />
+            </Principal>
+            <Dependent Role="param_type">
+              <PropertyRef Name="unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__payment__payment__2334397B">
+          <End Role="payment_type" Type="Self.payment_type" Multiplicity="1" />
+          <End Role="payment" Type="Self.payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="payment_type">
+              <PropertyRef Name="payment_type_id" />
+            </Principal>
+            <Dependent Role="payment">
+              <PropertyRef Name="payment_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__pos_type__unit_i__6AEFE058">
+          <End Role="unit" Type="Self.unit" Multiplicity="1" />
+          <End Role="pos_type" Type="Self.pos_type" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="unit">
+              <PropertyRef Name="unit_id" />
+            </Principal>
+            <Dependent Role="pos_type">
+              <PropertyRef Name="unit_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MebelCenterEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="client" EntityType="Self.client" />
+          <EntitySet Name="delivery" EntityType="Self.delivery" />
+          <EntitySet Name="delivery_status" EntityType="Self.delivery_status" />
+          <EntitySet Name="employee" EntityType="Self.employee" />
+          <EntitySet Name="estimate" EntityType="Self.estimate" />
+          <EntitySet Name="estimate_item" EntityType="Self.estimate_item" />
+          <EntitySet Name="material" EntityType="Self.material" />
+          <EntitySet Name="measurement" EntityType="Self.measurement" />
+          <EntitySet Name="measurement_param" EntityType="Self.measurement_param" />
+          <EntitySet Name="movement_type" EntityType="Self.movement_type" />
+          <EntitySet Name="notification" EntityType="Self.notification" />
+          <EntitySet Name="notification_type" EntityType="Self.notification_type" />
+          <EntitySet Name="order_status" EntityType="Self.order_status" />
+          <EntitySet Name="orders" EntityType="Self.orders" />
+          <EntitySet Name="param_type" EntityType="Self.param_type" />
+          <EntitySet Name="payment" EntityType="Self.payment" />
+          <EntitySet Name="payment_type" EntityType="Self.payment_type" />
+          <EntitySet Name="pos_type" EntityType="Self.pos_type" />
+          <EntitySet Name="position" EntityType="Self.position" />
+          <EntitySet Name="stock_movement" EntityType="Self.stock_movement" />
+          <EntitySet Name="unit" EntityType="Self.unit" />
+          <EntitySet Name="user_account" EntityType="Self.user_account" />
+          <AssociationSet Name="FK_client_user_account" Association="Self.FK_client_user_account">
+            <End Role="user_account" EntitySet="user_account" />
+            <End Role="client" EntitySet="client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_client" Association="Self.FK_orders_client">
+            <End Role="client" EntitySet="client" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__delivery__order___308E3499" Association="Self.FK__delivery__order___308E3499">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="delivery" EntitySet="delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK__delivery__status__318258D2" Association="Self.FK__delivery__status__318258D2">
+            <End Role="delivery_status" EntitySet="delivery_status" />
+            <End Role="delivery" EntitySet="delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_delivery_assembler" Association="Self.FK_delivery_assembler">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="delivery" EntitySet="delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employee_position" Association="Self.FK_employee_position">
+            <End Role="position" EntitySet="position" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_employee_user_account" Association="Self.FK_employee_user_account">
+            <End Role="user_account" EntitySet="user_account" />
+            <End Role="employee" EntitySet="employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_designer" Association="Self.FK_orders_designer">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__estimate___estim__1C873BEC" Association="Self.FK__estimate___estim__1C873BEC">
+            <End Role="estimate" EntitySet="estimate" />
+            <End Role="estimate_item" EntitySet="estimate_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__estimate__order___18B6AB08" Association="Self.FK__estimate__order___18B6AB08">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="estimate" EntitySet="estimate" />
+          </AssociationSet>
+          <AssociationSet Name="FK__estimate___pos_t__1D7B6025" Association="Self.FK__estimate___pos_t__1D7B6025">
+            <End Role="pos_type" EntitySet="pos_type" />
+            <End Role="estimate_item" EntitySet="estimate_item" />
+          </AssociationSet>
+          <AssociationSet Name="FK__material__unit_i__719CDDE7" Association="Self.FK__material__unit_i__719CDDE7">
+            <End Role="unit" EntitySet="unit" />
+            <End Role="material" EntitySet="material" />
+          </AssociationSet>
+          <AssociationSet Name="FK__stock_mov__mater__28ED12D1" Association="Self.FK__stock_mov__mater__28ED12D1">
+            <End Role="material" EntitySet="material" />
+            <End Role="stock_movement" EntitySet="stock_movement" />
+          </AssociationSet>
+          <AssociationSet Name="FK__measureme__measu__13F1F5EB" Association="Self.FK__measureme__measu__13F1F5EB">
+            <End Role="measurement" EntitySet="measurement" />
+            <End Role="measurement_param" EntitySet="measurement_param" />
+          </AssociationSet>
+          <AssociationSet Name="FK__measureme__order__11158940" Association="Self.FK__measureme__order__11158940">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="measurement" EntitySet="measurement" />
+          </AssociationSet>
+          <AssociationSet Name="FK__measureme__param__14E61A24" Association="Self.FK__measureme__param__14E61A24">
+            <End Role="param_type" EntitySet="param_type" />
+            <End Role="measurement_param" EntitySet="measurement_param" />
+          </AssociationSet>
+          <AssociationSet Name="FK__stock_mov__movem__29E1370A" Association="Self.FK__stock_mov__movem__29E1370A">
+            <End Role="movement_type" EntitySet="movement_type" />
+            <End Role="stock_movement" EntitySet="stock_movement" />
+          </AssociationSet>
+          <AssociationSet Name="FK__notificat__ntf_t__3552E9B6" Association="Self.FK__notificat__ntf_t__3552E9B6">
+            <End Role="notification_type" EntitySet="notification_type" />
+            <End Role="notification" EntitySet="notification" />
+          </AssociationSet>
+          <AssociationSet Name="FK__notificat__order__36470DEF" Association="Self.FK__notificat__order__36470DEF">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="notification" EntitySet="notification" />
+          </AssociationSet>
+          <AssociationSet Name="FK__orders__status_i__0D44F85C" Association="Self.FK__orders__status_i__0D44F85C">
+            <End Role="order_status" EntitySet="order_status" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__payment__order_i__22401542" Association="Self.FK__payment__order_i__22401542">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="payment" EntitySet="payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__stock_mov__order__2CBDA3B5" Association="Self.FK__stock_mov__order__2CBDA3B5">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="stock_movement" EntitySet="stock_movement" />
+          </AssociationSet>
+          <AssociationSet Name="FK__param_typ__unit___671F4F74" Association="Self.FK__param_typ__unit___671F4F74">
+            <End Role="unit" EntitySet="unit" />
+            <End Role="param_type" EntitySet="param_type" />
+          </AssociationSet>
+          <AssociationSet Name="FK__payment__payment__2334397B" Association="Self.FK__payment__payment__2334397B">
+            <End Role="payment_type" EntitySet="payment_type" />
+            <End Role="payment" EntitySet="payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__pos_type__unit_i__6AEFE058" Association="Self.FK__pos_type__unit_i__6AEFE058">
+            <End Role="unit" EntitySet="unit" />
+            <End Role="pos_type" EntitySet="pos_type" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MebelCenterModelContainer" CdmEntityContainer="MebelCenterEntities">
+          <EntitySetMapping Name="client">
+            <EntityTypeMapping TypeName="MebelCenterModel.client">
+              <MappingFragment StoreEntitySet="client">
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="registration_date" ColumnName="registration_date" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="delivery">
+            <EntityTypeMapping TypeName="MebelCenterModel.delivery">
+              <MappingFragment StoreEntitySet="delivery">
+                <ScalarProperty Name="delivery_id" ColumnName="delivery_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="status_id" ColumnName="status_id" />
+                <ScalarProperty Name="delivery_date" ColumnName="delivery_date" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="assembler_id" ColumnName="assembler_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="delivery_status">
+            <EntityTypeMapping TypeName="MebelCenterModel.delivery_status">
+              <MappingFragment StoreEntitySet="delivery_status">
+                <ScalarProperty Name="status_id" ColumnName="status_id" />
+                <ScalarProperty Name="status_name" ColumnName="status_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employee">
+            <EntityTypeMapping TypeName="MebelCenterModel.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="employee_id" ColumnName="employee_id" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+                <ScalarProperty Name="position_id" ColumnName="position_id" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="hire_date" ColumnName="hire_date" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estimate">
+            <EntityTypeMapping TypeName="MebelCenterModel.estimate">
+              <MappingFragment StoreEntitySet="estimate">
+                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estimate_item">
+            <EntityTypeMapping TypeName="MebelCenterModel.estimate_item">
+              <MappingFragment StoreEntitySet="estimate_item">
+                <ScalarProperty Name="estimate_id" ColumnName="estimate_id" />
+                <ScalarProperty Name="item_no" ColumnName="item_no" />
+                <ScalarProperty Name="pos_type_id" ColumnName="pos_type_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="material">
+            <EntityTypeMapping TypeName="MebelCenterModel.material">
+              <MappingFragment StoreEntitySet="material">
+                <ScalarProperty Name="material_id" ColumnName="material_id" />
+                <ScalarProperty Name="material_name" ColumnName="material_name" />
+                <ScalarProperty Name="unit_id" ColumnName="unit_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="measurement">
+            <EntityTypeMapping TypeName="MebelCenterModel.measurement">
+              <MappingFragment StoreEntitySet="measurement">
+                <ScalarProperty Name="measurement_id" ColumnName="measurement_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="measurement_date" ColumnName="measurement_date" />
+                <ScalarProperty Name="address" ColumnName="address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="measurement_param">
+            <EntityTypeMapping TypeName="MebelCenterModel.measurement_param">
+              <MappingFragment StoreEntitySet="measurement_param">
+                <ScalarProperty Name="measurement_id" ColumnName="measurement_id" />
+                <ScalarProperty Name="param_type_id" ColumnName="param_type_id" />
+                <ScalarProperty Name="param_value" ColumnName="param_value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="movement_type">
+            <EntityTypeMapping TypeName="MebelCenterModel.movement_type">
+              <MappingFragment StoreEntitySet="movement_type">
+                <ScalarProperty Name="movement_type_id" ColumnName="movement_type_id" />
+                <ScalarProperty Name="type_name" ColumnName="type_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notification">
+            <EntityTypeMapping TypeName="MebelCenterModel.notification">
+              <MappingFragment StoreEntitySet="notification">
+                <ScalarProperty Name="notification_id" ColumnName="notification_id" />
+                <ScalarProperty Name="ntf_type_id" ColumnName="ntf_type_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="recipient_email" ColumnName="recipient_email" />
+                <ScalarProperty Name="sent_at" ColumnName="sent_at" />
+                <ScalarProperty Name="send_status" ColumnName="send_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notification_type">
+            <EntityTypeMapping TypeName="MebelCenterModel.notification_type">
+              <MappingFragment StoreEntitySet="notification_type">
+                <ScalarProperty Name="ntf_type_id" ColumnName="ntf_type_id" />
+                <ScalarProperty Name="type_name" ColumnName="type_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="order_status">
+            <EntityTypeMapping TypeName="MebelCenterModel.order_status">
+              <MappingFragment StoreEntitySet="order_status">
+                <ScalarProperty Name="status_id" ColumnName="status_id" />
+                <ScalarProperty Name="status_name" ColumnName="status_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="MebelCenterModel.orders">
+              <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="designer_id" ColumnName="designer_id" />
+                <ScalarProperty Name="order_date" ColumnName="order_date" />
+                <ScalarProperty Name="status_id" ColumnName="status_id" />
+                <ScalarProperty Name="final_cost" ColumnName="final_cost" />
+                <ScalarProperty Name="completed_at" ColumnName="completed_at" />
+                <ScalarProperty Name="cancel_reason" ColumnName="cancel_reason" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="param_type">
+            <EntityTypeMapping TypeName="MebelCenterModel.param_type">
+              <MappingFragment StoreEntitySet="param_type">
+                <ScalarProperty Name="param_type_id" ColumnName="param_type_id" />
+                <ScalarProperty Name="param_name" ColumnName="param_name" />
+                <ScalarProperty Name="unit_id" ColumnName="unit_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="payment">
+            <EntityTypeMapping TypeName="MebelCenterModel.payment">
+              <MappingFragment StoreEntitySet="payment">
+                <ScalarProperty Name="payment_id" ColumnName="payment_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="payment_type_id" ColumnName="payment_type_id" />
+                <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="payment_method" ColumnName="payment_method" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="payment_type">
+            <EntityTypeMapping TypeName="MebelCenterModel.payment_type">
+              <MappingFragment StoreEntitySet="payment_type">
+                <ScalarProperty Name="payment_type_id" ColumnName="payment_type_id" />
+                <ScalarProperty Name="type_name" ColumnName="type_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pos_type">
+            <EntityTypeMapping TypeName="MebelCenterModel.pos_type">
+              <MappingFragment StoreEntitySet="pos_type">
+                <ScalarProperty Name="pos_type_id" ColumnName="pos_type_id" />
+                <ScalarProperty Name="pos_name" ColumnName="pos_name" />
+                <ScalarProperty Name="unit_id" ColumnName="unit_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="position">
+            <EntityTypeMapping TypeName="MebelCenterModel.position">
+              <MappingFragment StoreEntitySet="position">
+                <ScalarProperty Name="position_id" ColumnName="position_id" />
+                <ScalarProperty Name="position_name" ColumnName="position_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="stock_movement">
+            <EntityTypeMapping TypeName="MebelCenterModel.stock_movement">
+              <MappingFragment StoreEntitySet="stock_movement">
+                <ScalarProperty Name="movement_id" ColumnName="movement_id" />
+                <ScalarProperty Name="material_id" ColumnName="material_id" />
+                <ScalarProperty Name="movement_type_id" ColumnName="movement_type_id" />
+                <ScalarProperty Name="movement_date" ColumnName="movement_date" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="unit_price" ColumnName="unit_price" />
+                <ScalarProperty Name="document_no" ColumnName="document_no" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="unit">
+            <EntityTypeMapping TypeName="MebelCenterModel.unit">
+              <MappingFragment StoreEntitySet="unit">
+                <ScalarProperty Name="unit_id" ColumnName="unit_id" />
+                <ScalarProperty Name="unit_name" ColumnName="unit_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_account">
+            <EntityTypeMapping TypeName="MebelCenterModel.user_account">
+              <MappingFragment StoreEntitySet="user_account">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password_hash" ColumnName="password_hash" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
